@@ -1,0 +1,18 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: workops
+      POSTGRES_PASSWORD: workops
+      POSTGRES_DB: workops
+    ports:
+      - "5455:5432"   # 5455 to avoid clashing with a locally installed Postgres
+    volumes:
+      - workops_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U workops -d workops"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+volumes:
+  workops_pg:

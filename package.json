@@ -1,0 +1,15 @@
+{
+  "name": "workops-slice",
+  "private": true,
+  "workspaces": ["backend", "web"],
+  "scripts": {
+    "db:up": "docker compose up -d --wait db",
+    "db:down": "docker compose down",
+    "migrate": "npm run migrate -w backend",
+    "seed": "npm run seed -w backend",
+    "dev": "npm run dev:all",
+    "dev:all": "npx --yes concurrently -k -n api,web -c blue,green \"npm run dev -w backend\" \"npm run dev -w web\"",
+    "test": "npm test -w backend",
+    "typecheck": "npm run typecheck -w backend && npm run typecheck -w web"
+  }
+}
